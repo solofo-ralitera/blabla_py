@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class Publication(models.Model):
     author = models.ForeignKey(User)
-    type = models.ForeignKey('PublicationType')
+    type = models.ForeignKey('PublicationType', on_delete=models.CASCADE)
     content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     lang = models.CharField(max_length=6)
