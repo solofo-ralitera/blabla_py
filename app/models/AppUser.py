@@ -11,7 +11,7 @@ from rest_framework import serializers
 # https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 class AppUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    username = models.CharField(max_length=150)
+    username = models.CharField(max_length=150, unique=True)
     date_created = models.DateTimeField(auto_now_add=True)
     roles = models.TextField(null=True)
     last_login = models.DateTimeField(auto_now_add=True, null=True)
