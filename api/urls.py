@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import AttachmentType, PublicationType, Comment
+from .views import AttachmentType, PublicationType, Comment, Attachment, Publication
 from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
@@ -9,5 +9,8 @@ urlpatterns = [
     url(r'^publicationtypes$', PublicationType.View.as_view()),
 
     url(r'^comments$', Comment.View.as_view()),
+
+    url(r'^attachments$', Attachment.View.as_view()),
+    url(r'^publications$', Publication.View.as_view()),
 
 ]

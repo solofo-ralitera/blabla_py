@@ -12,9 +12,6 @@ class AttachmentType(models.Model):
     def __str__(self):
         return self.code + ' ' + self.name
 
-    def to_array(self):
-        return AttachmentTypeSerializer(self).data
-
 
 class AttachmentTypeSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=255)

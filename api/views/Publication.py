@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from app.models.AttachmentType import AttachmentType, AttachmentTypeSerializer
+from app.models.Publication import Publication, PublicationSerializer
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
@@ -17,12 +17,12 @@ class View(APIView):
     @classmethod
     def get(cls, request):
         return Response(
-            AttachmentTypeSerializer(AttachmentType.objects.all(), many=True).data
+            PublicationSerializer(Publication.objects.all(), many=True).data
         )
 
     @classmethod
     def post(cls, request):
-        serializer = AttachmentTypeSerializer(data=request.data)
+        serializer = PublicationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
