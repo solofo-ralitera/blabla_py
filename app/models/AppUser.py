@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
-from rest_framework import serializers
 # from django.db.models.signals import post_save
 # from django.dispatch import receiver
 
@@ -31,19 +30,3 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.appuser.save()
 """
-
-
-class AppUserSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
-    roles = serializers.CharField()
-    last_login = serializers.DateTimeField()
-
-    class Meta:
-        model = AppUser
-        fields = ('username', 'roles', 'last_login',)
-        read_only_fields = ('username', 'last_login',)
-
-    def update(self, instance, validated_data):
-        instance.roles = validated_data.get('roles', instance.roles)
-        instance.save()
-        return instance

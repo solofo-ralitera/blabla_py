@@ -6,7 +6,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from app.models.Publication import Publication, PublicationSerializer
+from app.models.Publication import Publication
+from app.models.serializers.PublicationSerializer import PublicationSerializer
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 

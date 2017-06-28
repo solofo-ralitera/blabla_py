@@ -6,8 +6,9 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from app.models.Attachment import Attachment, AttachmentComments, AttachmentCommentSerializer
-from app.models.Comment import CommentSerializer
+from app.models.Attachment import Attachment, AttachmentComments
+from app.models.serializers.AttachmentCommentSerializer import AttachmentCommentSerializer
+from app.models.serializers.CommentSerializer import CommentSerializer
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
