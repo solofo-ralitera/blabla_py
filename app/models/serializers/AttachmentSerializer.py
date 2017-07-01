@@ -23,7 +23,7 @@ class AttachmentSerializer(serializers.Serializer):
             parameters=validated_data['parameters'],
         )
         comment.author = AppUser.objects.get(user_id=validated_data['author'])
-        comment.type = AttachmentType.objects.get(id=validated_data['type'])
+        comment.type = AttachmentType.objects.get(pk=validated_data['type'])
         comment.save()
         return comment
 
@@ -31,6 +31,6 @@ class AttachmentSerializer(serializers.Serializer):
         instance.name = validated_data.get('name', instance.name)
         instance.parameters = validated_data.get('parameters', instance.parameters)
         instance.author = AppUser.objects.get(user_id=validated_data.get('author', instance.author))
-        instance.type = AttachmentType.objects.get(id=validated_data.get('type', instance.type))
+        instance.type = AttachmentType.objects.get(pk=validated_data.get('type', instance.type))
         instance.save()
         return instance

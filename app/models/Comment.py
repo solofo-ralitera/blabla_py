@@ -11,7 +11,7 @@ class Comment(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     comments = models.ManyToManyField('Comment')
-    attachments = models.ManyToManyField('Attachment')
+    # attachments = models.ManyToManyField('Attachment')
 
     def __str__(self):
         return self.content

@@ -14,6 +14,7 @@ class AttachmentType(models.Model):
 
 
 class AttachmentTypeSerializer(serializers.Serializer):
+    id = serializers.ReadOnlyField()
     name = serializers.CharField(max_length=255)
     code = serializers.CharField(max_length=255)
 

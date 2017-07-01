@@ -24,13 +24,13 @@ class PublicationSerializer(serializers.Serializer):
             lang=validated_data['lang'],
         )
         publication.author = AppUser.objects.get(user_id=validated_data['author'])
-        publication.type = PublicationType.objects.get(id=validated_data['type'])
+        publication.type = PublicationType.objects.get(pk=validated_data['type'])
         publication.save()
         return publication
 
     def update(self, instance, validated_data):
         instance.author = AppUser.objects.get(user_id=validated_data.get('author', instance.author))
-        instance.type = PublicationType.objects.get(id=validated_data.get('type', instance.type))
+        instance.type = PublicationType.objects.get(pk=validated_data.get('type', instance.type))
         instance.content = validated_data.get('content', instance.content)
         instance.lang = validated_data.get('lang', instance.lang)
         instance.save()

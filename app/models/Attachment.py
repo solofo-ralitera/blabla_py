@@ -20,7 +20,7 @@ class Attachment(models.Model):
         return self.name
 
     def get_comments(self):
-        return AttachmentComments.objects.filter(attachment=self)
+        return self.comments.all()
 
     def add_comment(self, comment):
         AttachmentComments(attachment=self, comment=comment).save()
