@@ -28,10 +28,15 @@ class View(APIView):
             return serializer.data
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request):
-        return Response(
-            self.serializer(self.model.objects.all(), many=True).data
-        )
+    def get(self, request, object_id=None):
+        if object_id is None or object_id == '':
+            return Response(
+                self.serializer(self.model.objects.all(), many=True).data
+            )
+        else:
+            return Response(
+                self.serializer(self.model.objects.get(pk=object_id), many=False).data
+            )
 
     def post(self, request):
         return Response(
@@ -39,7 +44,7 @@ class View(APIView):
             status=status.HTTP_201_CREATED
         )
 
-    def put(self, request):
+    def put(self, request, object_id=None):
         return Response(self.save(
             self.serializer(
                 self.get_object(pk=request.data['id']),
