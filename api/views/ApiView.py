@@ -40,12 +40,10 @@ class View(APIView):
             )
 
     def get_comments(self, request, object_id):
-        return Response(
-            CommentSerializer(
-                self.get_object(pk=object_id).get_comments(),
-                many=True
-            ).data
-        )
+        comments = []
+        for comment in self.get_object(pk=object_id).get_comments():
+            comments.append(comment.to_array())
+        return Response(comments)
 
     def post(self, request, object_id=None):
         return Response(
