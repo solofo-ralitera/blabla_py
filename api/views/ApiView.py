@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.http import Http404
+from app.models.serializers.CommentSerializer import CommentSerializer
 
 
 class View(APIView):
@@ -38,20 +39,35 @@ class View(APIView):
                 self.serializer(self.model.objects.get(pk=object_id), many=False).data
             )
 
-    def post(self, request):
+    def get_comments(self, request, object_id):
+        return Response(
+            CommentSerializer(
+                self.get_object(pk=object_id).get_comments(),
+                many=True
+            ).data
+        )
+
+    def post(self, request, object_id=None):
         return Response(
             self.save(self.serializer(data=request.data)),
             status=status.HTTP_201_CREATED
         )
 
+    def post_comment(self, request, object_id):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            self.get_object(pk=object_id).add_comment(serializer.save())
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def put(self, request, object_id=None):
         return Response(self.save(
             self.serializer(
-                self.get_object(pk=request.data['id']),
+                self.get_object(pk=request.data.get('id', object_id)),
                 data=request.data
             )
         ), status=status.HTTP_200_OK)
 
-    def delete(self, request):
-        self.get_object(pk=request.data['id']).delete()
+    def delete(self, request, object_id=None):
+        self.get_object(pk=request.data.get('id', object_id)).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
