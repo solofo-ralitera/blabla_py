@@ -40,6 +40,7 @@ class View(ApiView):
                     )
                     response['Content-Disposition'] = 'attachment; filename="{}"'.format(parameters.get('original_name'))
                     return response
+            # Normal response
             else:
                 return super().get(request=request, object_id=object_id)
 
@@ -47,8 +48,10 @@ class View(ApiView):
         return self.post(request=request, attachment_id=attachment_id)
 
     def post(self, request, attachment_id=None):
-        if not attachment_id:
+        if not attachment_id or attachment_id is None:
+            # TODO : post here
             attachment_id = None
+
         file = request.data['file']
         tmp, extension = file.content_type.split('/')
         path = os.path.join(settings.MEDIA_ROOT, '.'.join((str(attachment_id), extension)))
