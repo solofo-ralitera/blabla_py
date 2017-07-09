@@ -23,7 +23,7 @@ class View(ApiView):
 
     def get(self, request, object_id=None):
         if object_id is None or object_id == '':
-            return super().get(request, object_id)
+            return super().get(request=request, object_id=object_id)
         else:
             attachment = self.get_object(pk=object_id)
             # Return image
@@ -34,12 +34,17 @@ class View(ApiView):
                     os.path.join(settings.MEDIA_ROOT, '.'.join((str(attachment.id), parameters.get('extension', ''))))
                 )
                 with open(path, 'rb') as f:
-                    return HttpResponse(f.read(), content_type=parameters.get('content_type', ''))
+                    response = HttpResponse(
+                        f.read(),
+                        content_type=parameters.get('content_type', '')
+                    )
+                    response['Content-Disposition'] = 'attachment; filename="{}"'.format(parameters.get('original_name'))
+                    return response
             else:
-                return super().get(request, object_id)
+                return super().get(request=request, object_id=object_id)
 
     def put(self, request, attachment_id=None):
-        return self.post(request, attachment_id=attachment_id)
+        return self.post(request=request, attachment_id=attachment_id)
 
     def post(self, request, attachment_id=None):
         if not attachment_id:
@@ -60,7 +65,7 @@ class View(ApiView):
             post_result = super().post(request=request, object_id=None)
         else:
             post_result = super().put(request=request, object_id=attachment_id)
-
+        # Save attachment
         try:
             os.remove(path)
         except OSError as e:
