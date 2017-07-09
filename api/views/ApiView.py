@@ -36,7 +36,7 @@ class View(APIView):
             )
         else:
             return Response(
-                self.serializer(self.model.objects.get(pk=object_id), many=False).data
+                self.serializer(self.get_object(pk=object_id), many=False).data
             )
 
     def get_comments(self, request, object_id):
@@ -51,13 +51,6 @@ class View(APIView):
             status=status.HTTP_201_CREATED
         )
 
-    def post_comment(self, request, object_id):
-        serializer = CommentSerializer(data=request.data)
-        if serializer.is_valid():
-            self.get_object(pk=object_id).add_comment(serializer.save())
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def put(self, request, object_id=None):
         return Response(self.save(
             self.serializer(
@@ -65,6 +58,13 @@ class View(APIView):
                 data=request.data
             )
         ), status=status.HTTP_200_OK)
+
+    def post_comment(self, request, object_id):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            self.get_object(pk=object_id).add_comment(serializer.save())
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, object_id=None):
         self.get_object(pk=request.data.get('id', object_id)).delete()

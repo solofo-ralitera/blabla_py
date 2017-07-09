@@ -147,7 +147,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#JWT Auth
+# Restframework
+# http://www.django-rest-framework.org/
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -162,10 +164,20 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.FormParser',
     ),
 }
+
+# JWT Auth
+# https://github.com/GetBlimp/django-rest-framework-jwt
+
 JWT_AUTH = {
     'JWT_SECRET_KEY': 'keydelamortkikill456489',
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=2592000),
 }
+
+# attachments path
+
+MEDIA_ROOT = '/home/solofo/Projects/blabla_attahments/'
