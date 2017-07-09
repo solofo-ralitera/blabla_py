@@ -14,7 +14,7 @@ class View(ApiView):
     def __init__(self):
         super().__init__()
 
-    def get(self, request, comment_id):
+    def get(self, request, comment_id=None):
         comments = []
         for comment in self.model.objects.all():
             comments.append(comment.to_array())

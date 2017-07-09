@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from .views import \
+    User,\
     AttachmentType,\
     PublicationType,\
     Comment, CommentComments,\
@@ -10,6 +11,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     url(r'^login_check', obtain_jwt_token),
+
+    url(r'^users/(\d*)$', User.View.as_view()),
 
     url(r'^attachmenttypes/(\d*)$', AttachmentType.View.as_view()),
 

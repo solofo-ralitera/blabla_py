@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from .AppUser import AppUser
-from .serializers.AppUserSerializer import AppUserSerializer
 
 
 class Comment(models.Model):
@@ -28,7 +27,7 @@ class Comment(models.Model):
         comments = dict()
         comments['id'] = self.id
         comments['content'] = self.content
-        comments['author'] = AppUserSerializer(self.author).data
+        comments['author'] = self.author.to_array()
         comments['comments'] = []
         for comment in self.get_comments():
             if self.id == comment.id:

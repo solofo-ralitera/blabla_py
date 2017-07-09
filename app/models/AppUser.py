@@ -18,6 +18,13 @@ class AppUser(models.Model):
     def __str__(self):
         return self.user.__str__()
 
+    def to_array(self):
+        user = dict()
+        user['id'] = self.user_id
+        user['username'] = self.username
+        user['name'] = self.user.first_name + ' ' + self.user.last_name
+        return user
+
 
 """
 @receiver(post_save, sender=User)

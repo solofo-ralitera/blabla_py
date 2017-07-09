@@ -11,9 +11,9 @@ class View(ApiView):
     def __init__(self):
         super().__init__()
 
-    def get(self, request, attachment_id):
+    def get(self, request, attachment_id=None):
         return self.get_comments(request, attachment_id)
 
-    def post(self, request, attachment_id):
+    def post(self, request, attachment_id=None):
         return self.post_comment(request, attachment_id)
 
