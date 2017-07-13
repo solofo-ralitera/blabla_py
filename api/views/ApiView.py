@@ -40,10 +40,9 @@ class View(APIView):
             )
 
     def get_comments(self, request, object_id):
-        comments = []
-        for comment in self.get_object(pk=object_id).get_comments():
-            comments.append(comment.to_array())
-        return Response(comments)
+        return Response(
+            [comment.to_array() for comment in self.get_object(pk=object_id).get_comments()]
+        )
 
     def post(self, request, object_id=None):
         return Response(

@@ -28,10 +28,7 @@ class Comment(models.Model):
         comments['id'] = self.id
         comments['content'] = self.content
         comments['author'] = self.author.to_array()
-        comments['comments'] = []
-        for comment in self.get_comments():
-            if self.id != comment.id:
-                comments['comments'].append(comment.to_array())
+        comments['comments'] = [comment.to_array() for comment in self.get_comments() if self.id != comment.id]
         return comments
 
 
