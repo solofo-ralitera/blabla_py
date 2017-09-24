@@ -92,8 +92,8 @@ DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.mysql',    # Backends disponibles : 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'blabla_py',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'api',
+        'PASSWORD': 'api',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }

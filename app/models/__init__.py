@@ -6,10 +6,11 @@ from . import Comment
 from . import Follow
 from . import PublicationType
 from . import Publication
+from . import Client
 
 __all__ = (
     'AppUser',
     'AttachmentType', 'Attachment',
     'PublicationType', 'Publication',
-    'Comment', 'Follow',
+    'Comment', 'Follow', 'Client'
 )
