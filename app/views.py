@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-from app import forms
+from app.models import Client
 
 
 # Create your views here.
@@ -14,9 +14,9 @@ def login(request):
 
 
 def devi(request):
-    return render(request,'devis/client.html')
+    return render(request,'app/devis/client.html')
 
 
 def add(request):
-    form = forms.ClientForm
-    return render(request,'devis/client.html',{'form':form})
+    form = Client.ClientForm()
+    return render(request, 'app/devis/client.html', {'form': form})

@@ -2,9 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Test Form</title>
 </head>
 <body>
-
+    <form action="{{ request.path }}" method="post">
+        {% csrf_token %}
+                        {% for field in form %}
+                    <table>
+                    <colgroup>
+                        <col style="width: 45%;">
+                        <col style="width: 10%;">
+                        <col style="width: 45%;">
+                    </colgroup>
+                    <tr>
+                        <td>{{ field.label_tag }}</td>
+                        <td></td>
+                        <td>{{ field }}</td>
+                    </tr>
+                    </table>
+                {% endfor %}
+        <input type="submit" value="Submit" />
+    </form>
 </body>
 </html>
